@@ -1,108 +1,101 @@
 <p align="center">
-  <img src="https://avatars.githubusercontent.com/u/298001799?s=200&v=4" alt="SolonGate" width="160">
-</p>
-
-<h1 align="center">SolonGate</h1>
-
-<p align="center">
-  <strong>MAKE AI SECURE AGAIN</strong>
-</p>
-
-<p align="center">
-  Security guardrails for AI agents — and for the software supply chain they run on.
+  <img src="https://raw.githubusercontent.com/solongate/.github/main/profile/assets/banner.png" alt="SolonGate" width="820">
 </p>
 
 <p align="center">
   <a href="https://solongate.com"><img src="https://img.shields.io/badge/website-solongate.com-2f81f7?style=flat-square" alt="Website"></a>
-  <a href="https://github.com/orgs/solongate/repositories"><img src="https://img.shields.io/badge/repositories-2-2f81f7?style=flat-square" alt="Repositories"></a>
-  <img src="https://img.shields.io/badge/built%20with-Go%20%7C%20TypeScript-2f81f7?style=flat-square" alt="Built with">
-  <img src="https://img.shields.io/badge/local--first-no%20cloud%20required-2f81f7?style=flat-square" alt="Local-first">
+  <img src="https://img.shields.io/badge/built%20with-Go%20%7C%20TypeScript-2f81f7?style=flat-square" alt="Built with Go and TypeScript">
+  <img src="https://img.shields.io/badge/runs-fully%20on%20your%20machine-2f81f7?style=flat-square" alt="Runs fully on your machine">
 </p>
-
----
 
 ## What we build
 
 AI agents now read files, run commands, call tools and talk to other agents on
-behalf of real users. That surface is wide, fast-moving and mostly unmonitored.
-We build **open-source, local-first tooling** that makes it measurable:
+behalf of real users. That surface is wide, fast moving and mostly unmonitored.
+We build open source security tooling that makes it measurable, and that runs
+entirely on your own machine.
 
-- 🛡️ **Agent security posture** — audit what your agents actually did, scored against the OWASP Agentic Top 10.
-- 📦 **Supply-chain impact analysis** — map newly disclosed CVEs to the product releases you already shipped.
-- 🔒 **Your data stays yours** — no account, no telemetry, no cloud service. Everything runs on your machine, offline where it can.
+**Agent security posture.** Audit what your agents actually did, scored against
+the OWASP Agentic Top 10.
+
+**Supply chain impact analysis.** Map newly disclosed vulnerabilities to the
+product releases you have already shipped.
+
+**Your data stays yours.** No account, no telemetry, no cloud service. Internet
+access is optional and always explicit.
 
 ## Projects
 
 | Project | What it does | Stack |
-| :--- | :--- | :--- |
-| **[solongate-audit](https://github.com/solongate/solongate-audit)** <br> <img src="https://img.shields.io/github/stars/solongate/solongate-audit?style=flat-square&color=2f81f7&label=%E2%AD%90" alt="Stars"> <img src="https://img.shields.io/github/license/solongate/solongate-audit?style=flat-square&color=2f81f7" alt="License"> | AI agent security audit CLI. Reads local agent session logs (Claude Code, Gemini CLI, OpenClaw), parses every tool call, and scores all ten **OWASP Agentic Top 10 (2026)** categories as `PROTECTED` / `PARTIAL` / `NOT PROTECTED`. Live watch mode, JSON/CSV/HTML/PDF export, CI-friendly exit codes. | TypeScript · Node 18+ |
-| **[psirtmap](https://github.com/solongate/psirtmap)** <br> <img src="https://img.shields.io/github/stars/solongate/psirtmap?style=flat-square&color=2f81f7&label=%E2%AD%90" alt="Stars"> <img src="https://img.shields.io/github/license/solongate/psirtmap?style=flat-square&color=2f81f7" alt="License"> | PSIRT-grade inventory and impact analysis for device, firmware and embedded software vendors. Ingests CycloneDX SBOMs into a local SQLite inventory, syncs OSV + CISA KEV snapshots, then scans your shipped releases **offline**. Durable findings, append-only assessments, air-gapped feed bundles. | Go · SQLite |
+|:---|:---|:---|
+| **[solongate-audit](https://github.com/solongate/solongate-audit)** <br> <img src="https://img.shields.io/github/stars/solongate/solongate-audit?style=flat-square&color=2f81f7&label=stars" alt="Stars"> <img src="https://img.shields.io/github/license/solongate/solongate-audit?style=flat-square&color=2f81f7" alt="License"> | AI agent security audit CLI. Reads local agent session logs from Claude Code, Gemini CLI and OpenClaw, parses every tool call, then scores all ten **OWASP Agentic Top 10 (2026)** categories as `PROTECTED`, `PARTIAL` or `NOT PROTECTED`. Live watch mode, JSON, CSV, HTML and PDF export, plus exit codes you can gate a pipeline on. | TypeScript, Node 18+ |
+| **[psirtmap](https://github.com/solongate/psirtmap)** <br> <img src="https://img.shields.io/github/stars/solongate/psirtmap?style=flat-square&color=2f81f7&label=stars" alt="Stars"> <img src="https://img.shields.io/github/license/solongate/psirtmap?style=flat-square&color=2f81f7" alt="License"> | Inventory and impact analysis for teams shipping devices, firmware and embedded software. Ingests CycloneDX SBOMs into a local SQLite inventory, syncs OSV and CISA KEV snapshots, then scans your shipped releases offline. Durable findings, append only assessments, and checksummed bundles for air gapped transfer. | Go, SQLite |
 
 ## Try it in 30 seconds
 
-**Audit your AI agent's security posture**
+Audit your AI agent's security posture:
 
 ```bash
 npx solongate-audit --detailed
 ```
 
-Returns a score out of 10 across ASI01–ASI10. In CI, it exits `0` at ≥ 7/10 and `1` below that:
+It returns a score out of 10 across ASI01 through ASI10. In CI it exits `0` at
+7/10 or above and `1` below that, so you can gate a pipeline on it directly:
 
 ```bash
-npx solongate-audit   # add to your pipeline as a gate
+npx solongate-audit
 ```
 
-**Map a new CVE to your shipped releases**
+Map a newly disclosed vulnerability to the releases you shipped:
 
 ```bash
-# install (macOS / Linux)
+# install on macOS or Linux
 curl -fsSL https://raw.githubusercontent.com/solongate/psirtmap/main/scripts/install.sh | sh
 
-psirtmap sync                                           # refresh OSV + KEV snapshots
-psirtmap release import AG-200@2.2 ./firmware-2.2.cdx.json
-psirtmap scan AG-200@2.2                                # offline, no account needed
+psirtmap sync                                              # refresh OSV and KEV snapshots
+psirtmap release import AG-200@2.2 ./firmware-2.2.cdx.json # import a CycloneDX SBOM
+psirtmap scan AG-200@2.2                                   # offline, no account needed
 ```
 
 > [!NOTE]
 > PSIRTMap reports **potential impact**. A version match is evidence that needs
-> human review — not proof of exploitability.
+> human review, not proof of exploitability.
 
 ## Design principles
 
 | | |
-| :--- | :--- |
-| **Local-first** | No account, no database server, no SolonGate cloud. Internet is optional and explicit. |
-| **Honest findings** | We label uncertainty instead of hiding it — `PARTIAL`, `potential impact`, `requires review`. |
-| **Standards-aligned** | OWASP Agentic Top 10, CycloneDX, OSV, CISA KEV. No proprietary formats. |
-| **Automatable** | Every tool has `--json` and a meaningful exit code, so it drops into CI unchanged. |
+|:---|:---|
+| **Local first** | No account, no database server, no SolonGate cloud. Your SBOMs and agent logs never leave your machine. |
+| **Honest findings** | We label uncertainty instead of hiding it: `PARTIAL`, `potential impact`, `requires review`. |
+| **Standards aligned** | OWASP Agentic Top 10, CycloneDX, OSV, CISA KEV. No proprietary formats, no lock in. |
+| **Automatable** | Every tool ships `--json` output and a meaningful exit code, so it drops into CI unchanged. |
 
 ## Contributing
 
-Issues and pull requests are welcome on any repository. The quickest way to help:
+Issues and pull requests are welcome on every repository. The quickest ways to
+help:
 
-- 🐛 **File an issue** — a false positive or a missed detection is the most valuable bug report we get.
-- 🧩 **Add agent log support** — `solongate-audit` grows by learning new agent log formats.
-- 📚 **Improve docs** — if a command confused you, it will confuse the next person too.
+**File an issue.** A false positive or a missed detection is the most valuable
+bug report we get.
 
-Start from the `CONTRIBUTING` notes in the relevant repository, and open an issue
-before large changes so we can agree on the approach first.
+**Teach us a new log format.** `solongate-audit` grows by learning how more
+agents write their session logs.
+
+**Improve the docs.** If a command confused you, it will confuse the next person
+too.
+
+Please open an issue before large changes so we can agree on the approach first.
 
 ## Security
 
-Found a vulnerability in one of our tools? Please **do not** open a public issue.
+Found a vulnerability in one of our tools? Please do not open a public issue.
 Report it privately through the security advisory page of the affected
-repository, and we will coordinate disclosure with you.
-
----
+repository and we will coordinate disclosure with you.
 
 <p align="center">
   <a href="https://solongate.com">solongate.com</a>
-  &nbsp;·&nbsp;
+  &nbsp;&middot;&nbsp;
   <a href="https://github.com/orgs/solongate/repositories">Repositories</a>
-  &nbsp;·&nbsp;
+  &nbsp;&middot;&nbsp;
   <a href="https://github.com/solongate/solongate-audit/issues">Report an issue</a>
-</p>
-
-<p align="center">
-  <sub>Built in the open. 🇺🇸 United States of America</sub>
 </p>
