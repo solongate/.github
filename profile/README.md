@@ -2,21 +2,33 @@
   <img src="https://raw.githubusercontent.com/solongate/.github/main/profile/assets/banner.png" alt="SolonGate" width="820">
 </p>
 
-## What we build
+## Who we are
 
-AI agents now read files, run commands, call tools and talk to other agents on
-behalf of real users. That surface is wide, fast moving and mostly unmonitored.
-We build open source security tooling that makes it measurable, and that runs
-entirely on your own machine.
+SolonGate is named after Solon, the Athenian lawgiver who in 594 BC wrote the
+laws down and read them out to the assembly. The point was never the rules
+themselves. It was that they were written, public, and applied the same way to
+everyone, so that power finally had something to answer to.
 
-**Agent security posture.** Audit what your agents actually did, scored against
-the OWASP Agentic Top 10.
+We are building that for AI that executes. Models no longer only answer
+questions. They call tools, run commands, read files and hand work to other
+agents, almost always carrying whatever authority the person who started them
+happens to have. That authority is rarely written down anywhere, so nothing can
+check it, and nobody can say afterwards what was actually allowed to happen.
 
-**Supply chain impact analysis.** Map newly disclosed vulnerabilities to the
-product releases you have already shipped.
+## Why we build in the open
 
-**Your data stays yours.** No account, no telemetry, no cloud service. Internet
-access is optional and always explicit.
+Security you cannot read is security you have to take on faith. We would rather
+be audited than believed, so we publish the tools, we publish the method behind
+them, and when we benchmark ourselves we publish what we missed as well.
+
+We also think this work belongs on your machine instead of ours. Agent session
+logs and SBOMs are some of the most revealing artifacts an engineering team
+produces. The tools here read them locally, keep their state in a local file,
+and reach the network only when you explicitly ask them to.
+
+The gateway product lives at [solongate.com](https://solongate.com). What lives
+in this organization is the open source side of that work: standalone tools you
+can run today, with no account, no telemetry, and nothing of ours in the path.
 
 ## Projects
 
@@ -24,45 +36,6 @@ access is optional and always explicit.
 |:---|:---|:---|
 | **[solongate-audit](https://github.com/solongate/solongate-audit)** <br> <img src="https://img.shields.io/github/stars/solongate/solongate-audit?style=flat-square&color=2f81f7&label=stars" alt="Stars"> <img src="https://img.shields.io/github/license/solongate/solongate-audit?style=flat-square&color=2f81f7" alt="License"> | AI agent security audit CLI. Reads local agent session logs from Claude Code, Gemini CLI and OpenClaw, parses every tool call, then scores all ten **OWASP Agentic Top 10 (2026)** categories as `PROTECTED`, `PARTIAL` or `NOT PROTECTED`. Live watch mode, JSON, CSV, HTML and PDF export, plus exit codes you can gate a pipeline on. | TypeScript, Node 18+ |
 | **[psirtmap](https://github.com/solongate/psirtmap)** <br> <img src="https://img.shields.io/github/stars/solongate/psirtmap?style=flat-square&color=2f81f7&label=stars" alt="Stars"> <img src="https://img.shields.io/github/license/solongate/psirtmap?style=flat-square&color=2f81f7" alt="License"> | Inventory and impact analysis for teams shipping devices, firmware and embedded software. Ingests CycloneDX SBOMs into a local SQLite inventory, syncs OSV and CISA KEV snapshots, then scans your shipped releases offline. Durable findings, append only assessments, and checksummed bundles for air gapped transfer. | Go, SQLite |
-
-## Try it in 30 seconds
-
-Audit your AI agent's security posture:
-
-```bash
-npx solongate-audit --detailed
-```
-
-It returns a score out of 10 across ASI01 through ASI10. In CI it exits `0` at
-7/10 or above and `1` below that, so you can gate a pipeline on it directly:
-
-```bash
-npx solongate-audit
-```
-
-Map a newly disclosed vulnerability to the releases you shipped:
-
-```bash
-# install on macOS or Linux
-curl -fsSL https://raw.githubusercontent.com/solongate/psirtmap/main/scripts/install.sh | sh
-
-psirtmap sync                                              # refresh OSV and KEV snapshots
-psirtmap release import AG-200@2.2 ./firmware-2.2.cdx.json # import a CycloneDX SBOM
-psirtmap scan AG-200@2.2                                   # offline, no account needed
-```
-
-> [!NOTE]
-> PSIRTMap reports **potential impact**. A version match is evidence that needs
-> human review, not proof of exploitability.
-
-## Design principles
-
-| | |
-|:---|:---|
-| **Local first** | No account, no database server, no SolonGate cloud. Your SBOMs and agent logs never leave your machine. |
-| **Honest findings** | We label uncertainty instead of hiding it: `PARTIAL`, `potential impact`, `requires review`. |
-| **Standards aligned** | OWASP Agentic Top 10, CycloneDX, OSV, CISA KEV. No proprietary formats, no lock in. |
-| **Automatable** | Every tool ships `--json` output and a meaningful exit code, so it drops into CI unchanged. |
 
 ## Contributing
 
