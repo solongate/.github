@@ -2,12 +2,6 @@
   <img src="https://raw.githubusercontent.com/solongate/.github/main/profile/assets/banner.png" alt="SolonGate" width="820">
 </p>
 
-<p align="center">
-  <a href="https://solongate.com"><img src="https://img.shields.io/badge/website-solongate.com-2f81f7?style=flat-square" alt="Website"></a>
-  <img src="https://img.shields.io/badge/built%20with-Go%20%7C%20TypeScript-2f81f7?style=flat-square" alt="Built with Go and TypeScript">
-  <img src="https://img.shields.io/badge/runs-fully%20on%20your%20machine-2f81f7?style=flat-square" alt="Runs fully on your machine">
-</p>
-
 ## What we build
 
 AI agents now read files, run commands, call tools and talk to other agents on
