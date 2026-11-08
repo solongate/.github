@@ -34,6 +34,7 @@ can run today, with no account, no telemetry, and nothing of ours in the path.
 
 | Project | What it does |
 |:---|:---|
+| **[agent-security](https://github.com/solongate/agent-security)** | Local-first, open-source security gateway for AI coding agents. Sits between the agent and your machine, enforces tool-call policies, detects secrets and audits every action on-device. |
 | **[solongate-audit](https://github.com/solongate/solongate-audit)** | AI agent security audit CLI. Reads local agent session logs from Claude Code, Gemini CLI and OpenClaw, parses every tool call, then scores all ten **OWASP Agentic Top 10 (2026)** categories as `PROTECTED`, `PARTIAL` or `NOT PROTECTED`. |
 | **[psirtmap](https://github.com/solongate/psirtmap)** | Inventory and impact analysis for teams shipping devices, firmware and embedded software. Ingests CycloneDX SBOMs into a local inventory, syncs OSV and CISA KEV snapshots, then scans your shipped releases offline. |
 
